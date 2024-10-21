@@ -1,3 +1,5 @@
+use std::io::Write;
+
 use rand::thread_rng;
 use rand::Rng;
 
@@ -34,5 +36,5 @@ fn main() {
     let mut rng = thread_rng();
     let rule_index = rng.gen_range(0..rules.len());
 
-    println!("{}. {}", rule_index + 1, rules[rule_index]);
+    let _ = writeln!(std::io::stdout(), "{}. {}", rule_index + 1, rules[rule_index]);
 }
