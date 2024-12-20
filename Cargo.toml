@@ -7,4 +7,4 @@ repository = "https://github.com/ismail/adulting"
 description = "A program to print one rule at a time from The 25 Principles for Adult Behavior: John Perry Barlow."
 
 [dependencies]
-clap = "*"
+clap = "4"
