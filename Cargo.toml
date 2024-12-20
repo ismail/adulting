@@ -1,7 +1,10 @@
 [package]
 name = "adulting"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 license = "Unlicense"
 repository = "https://github.com/ismail/adulting"
 description = "A program to print one rule at a time from The 25 Principles for Adult Behavior: John Perry Barlow."
+
+[dependencies]
+clap = "*"
