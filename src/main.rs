@@ -1,5 +1,4 @@
-use clap::{Arg, Command};
-use std::io::Write;
+use clap::Parser;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 pub struct LCG {
@@ -61,19 +60,20 @@ impl LCG {
     }
 }
 
-fn main() {
-    let matches = Command::new("adulting")
-        .version(env!("CARGO_PKG_VERSION"))
-        .about("The 25 Principles for Adult Behavior by John Perry Barlow.")
-        .arg(
-            Arg::new("all")
-                .long("all")
-                .help("Prints all principles")
-                .action(clap::ArgAction::SetTrue),
-        )
-        .get_matches();
+#[derive(Parser)]
+#[command(
+    name = "adulting",
+    version,
+    about = "The 25 Principles for Adult Behavior by John Perry Barlow."
+)]
+struct Cli {
+    /// Prints all principles
+    #[arg(long)]
+    all: bool,
+}
 
-    // From https://www.openculture.com/2018/02/the-25-principles-for-adult-behavior.html
+fn main() {
+    let cli = Cli::parse();
     let rules = [
         "Be patient. No matter what.",
         "Don’t badmouth: Assign responsibility, not blame. Say nothing of another you wouldn’t say to him.",
@@ -102,15 +102,14 @@ fn main() {
         "Endure.",
     ];
 
-    if matches.get_flag("all") {
+    if cli.all {
         for (i, rule) in rules.iter().enumerate() {
-            let _ = writeln!(std::io::stdout(), "{}. {}", i + 1, rule);
+            println!("{}. {}", i + 1, rule);
         }
     } else {
         let mut rng = LCG::new();
         let rule_index = rng.next(rules.len() as u32) as usize;
-        let _ = writeln!(
-            std::io::stdout(),
+        println!(
             "{}. {}",
             rule_index + 1,
             rules[rule_index]
